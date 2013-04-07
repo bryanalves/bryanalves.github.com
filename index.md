@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Main page
+title: Bryan's Blah Blog
 tagline: Stuff
 ---
 {% include JB/setup %}
