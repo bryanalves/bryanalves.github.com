@@ -5,7 +5,6 @@ description: ""
 category: programming
 tags: [programming]
 ---
-{% include JB/setup %}
 
 There are a lot of testing frameworks out there for Rails.  A lot of work has been done in the community over the past few years, and it's important to stay up to date with the latest in testing.  Minitest is something that's fairly old and stable at this point, but it provides a nice, clean, standardized testing interface with enough extensions to support other testing methodologies as well.
 

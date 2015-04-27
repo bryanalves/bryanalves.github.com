@@ -5,7 +5,6 @@ description: ""
 category: programming
 tags: [programming]
 ---
-{% include JB/setup %}
 
 There are a lot of programming languages available, and a lot of reasons to pick one over the other.
 

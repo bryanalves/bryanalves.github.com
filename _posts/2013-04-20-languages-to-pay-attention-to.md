@@ -5,7 +5,6 @@ description: ""
 category:  programming
 tags: [programming]
 ---
-{% include JB/setup %}
 
 So now that we've established why languages and platforms are powerful, let's take a look at some languages that you should pay attention to:
 
