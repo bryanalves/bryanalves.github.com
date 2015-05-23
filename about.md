@@ -11,3 +11,4 @@ My name is Bryan Alves, and I'm a software engineer in the Boston area.  I mostl
 * [Twitter](https://www.twitter.com/bryanalves)
 * [LinkedIn](https://www.linkedin.com/in/bryanalves)
 * [Resume](https://dl.dropbox.com/u/51369407/resume.pdf)
+* [GPG](https://dl.dropbox.com/u/51369407/A9806FD1E6309118.gpg)
