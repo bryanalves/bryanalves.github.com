@@ -2,8 +2,8 @@
 layout: post
 title: "Enabling LXC on Archlinux with systemd-networkd"
 description: ""
-category: programming
-tags: [programming]
+category: systems
+tags: [systems,systemd,lxc,dnsmasq]
 ---
 
 After playing around with docker a lot, I decided that it was time to spend some time with LXC as I tended to treat some of my docker containers like mini VMs anyway, especially when developing.  I think a lot of the benefits of docker aren't actually benefits, and I'll be writing a follow-up post about that.  To that end, I wanted to get LXC up and running.
