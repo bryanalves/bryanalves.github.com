@@ -2,7 +2,7 @@
 layout: post
 title: "Languages to pay attention to"
 description: ""
-category:  programming
+category: programming
 tags: [programming]
 ---
 
