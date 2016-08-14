@@ -5,6 +5,7 @@ author:      Bryan Alves
 description: "The blog of Bryan Alves"
 baseurl:     ""
 url:         "http://bryanalves.github.io"
+gems: [jekyll-paginate]
 
 # Google analytics
 google_analytics:
