@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>chef on Bryan's Blah Blog</title><link>http://bryanalves.github.io/tags/chef/</link><description>Bryan's Blah Blog (chef)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 Aug 2016 00:00:00 +0000</lastBuildDate><atom:link href="http://bryanalves.github.io/tags/chef/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Chef Zero with Berkshelf</title><link>http://bryanalves.github.io/posts/2016-08-14-chef-zero-with-berkshelf/</link><pubDate>Sun, 14 Aug 2016 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2016-08-14-chef-zero-with-berkshelf/</guid><description>&lt;p>If you have a single machine that you want to control with Chef (for example, a single home server, or a server that you want to bootstrap to run chef-server for other things), Chef Zero can be a good tool to use. Chef Zero can be used by using the &lt;code>chef-client -z&lt;/code> command. This will treat your local working directory like a Chef server, so you&amp;rsquo;ll want the following directory structure:&lt;/p>
+&lt;pre>&lt;code>cookbooks/
+data_bags/
+nodes/
+roles/
+environments/
+&lt;/code>&lt;/pre>
+&lt;p>Things are optional, but you&amp;rsquo;ll at least want &lt;code>cookbooks&lt;/code>.&lt;/p>
+&lt;p>Actually, you don&amp;rsquo;t want cookbooks either.&lt;/p>
+&lt;p>What?&lt;/p>
+&lt;p>Well, when you are working with a real chef server, you don&amp;rsquo;t manually upload cookbooks to it, so why would you do the same with a virtual Chef server? Use Berkshelf like you normally do! Add &lt;code>cookbooks/&lt;/code> do your .gitignore file, create a separate directory to store your environment cookbook (I use &lt;code>site-cookbooks/&lt;/code>), and make a &lt;code>Berksfile&lt;/code> in the root directory that references it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-ruby" data-lang="ruby">&lt;span style="display:flex;">&lt;span>source &lt;span style="color:#e6db74">&amp;#39;https://supermarket.chef.io&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cookbook &lt;span style="color:#e6db74">&amp;#39;server-env&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">path&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;./site-cookbooks/server-env&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now your directory structure will look like this:&lt;/p>
+&lt;pre>&lt;code>site-cookbooks/
+server-env/
+attributes/
+recipes/
+..
+data_bags/
+Berksfile
+.gitignore
+&lt;/code>&lt;/pre>
+&lt;p>Add data_bags, environments, roles, as necessary. When you are ready, run &lt;code>berks vendor site-cookbooks&lt;/code> and the result will be a &lt;code>cookbooks/&lt;/code> directory ready for use by chef-zero. Run &lt;code>chef-client -z&lt;/code> and you are ready to converge your server complete with the full power of the chef supermarket in an easy to maintain way. Be sure to check in your &lt;code>Berksfile.lock&lt;/code> so that this is fully reproducible.&lt;/p>
+&lt;p>The only real downside to this is that while Berksfile sort of works with multiple cookbooks, it can sometimes be awkward to resolve the dependency graph. For example, if you use this as a baseline for multiple servers, and have &lt;code>server1-env&lt;/code> and &lt;code>server2-env&lt;/code>, those cookbooks must have exact version matches on overlapping dependencies from the supermarket. This technique is only suitable for a single environment cookbook.&lt;/p></description></item></channel></rss>

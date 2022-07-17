@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>programming on Bryan's Blah Blog</title><link>http://bryanalves.github.io/tags/programming/</link><description>Bryan's Blah Blog (programming)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 12 Jun 2013 00:00:00 +0000</lastBuildDate><atom:link href="http://bryanalves.github.io/tags/programming/index.xml" rel="self" type="application/rss+xml"/><item><title>Upgrading to MiniTest</title><link>http://bryanalves.github.io/posts/2013-06-12-upgrading-to-minitest/</link><pubDate>Wed, 12 Jun 2013 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2013-06-12-upgrading-to-minitest/</guid><description>&lt;p>There are a lot of testing frameworks out there for Rails. A lot of work has been done in the community over the past few years, and it&amp;rsquo;s important to stay up to date with the latest in testing. Minitest is something that&amp;rsquo;s fairly old and stable at this point, but it provides a nice, clean, standardized testing interface with enough extensions to support other testing methodologies as well.&lt;/p>
+&lt;h3 id="what-about-rspec" >What about RSpec?
+&lt;span>
+&lt;a href="#what-about-rspec">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>RSpec is great, and it&amp;rsquo;s full featured and awesome. If you are using RSpec, feel free to continue. Lots of things have support for it, and there&amp;rsquo;s a great environment around RSpec.&lt;/p>
+&lt;h3 id="minitestunit-or-minitestspec" >MiniTest::Unit or MiniTest::Spec
+&lt;span>
+&lt;a href="#minitestunit-or-minitestspec">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Minitest&amp;rsquo;s biggest strength is it&amp;rsquo;s ability to straddle the xUnit/spec line, seamlessly transitioning between the two. In my opinion, spec-style tests are better and the way to go. They more cleanly and succinctly express intention of the test. However, they aren&amp;rsquo;t always appropriate, and falling back to standard xUnit assertions is very helpful.&lt;/p>
+&lt;p>Additionally, MiniTest::Spec gets surprisingly close to the ability of RSpec, especially with some of the extra expectation gems.&lt;/p>
+&lt;h3 id="extension-versus-replacement" >Extension versus replacement
+&lt;span>
+&lt;a href="#extension-versus-replacement">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Things like shoulda attempted to make testing better by providing alternatives. With the exception of RSpec, these alternatives have simply diluted the choice of testing frameworks. MiniTest is different in that it&amp;rsquo;s modular and plugin-based, so everything stays coherent, even with significant additions. There&amp;rsquo;s a large list of extensions available on &lt;a href="https://github.com/seattlerb/minitest">Github&lt;/a>.&lt;/p>
+&lt;h3 id="the-way-forward" >The way forward
+&lt;span>
+&lt;a href="#the-way-forward">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>If you like spec-style tests, then gradually start going file-by-file through your test suite and do the conversion. Once you are done, you get the satisfaction of using a single testing tool, more readable tests, and probably faster test execution.&lt;/p></description></item><item><title>Languages to pay attention to</title><link>http://bryanalves.github.io/posts/2013-04-20-languages-to-pay-attention-to/</link><pubDate>Sat, 20 Apr 2013 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2013-04-20-languages-to-pay-attention-to/</guid><description>&lt;p>So now that we&amp;rsquo;ve established why languages and platforms are powerful, let&amp;rsquo;s take a look at some languages that you should pay attention to:&lt;/p>
+&lt;h3 id="c" >C
+&lt;span>
+&lt;a href="#c">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>C trades everything else for speed. Most languages have bindings to C, so if you need to drop down to C in order to get fast things done, you can. It&amp;rsquo;s development environment is good enough, and it&amp;rsquo;s just what you use if you want to take something and make it faster.&lt;/p>
+&lt;p>If you need to write fast code, or convert existing code to fast code, you are likely going to end up working in C, at least a little bit.&lt;/p>
+&lt;h3 id="java" >Java
+&lt;span>
+&lt;a href="#java">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Java is ubiquitous. There&amp;rsquo;s a huge community around it, and a lot of work has gone into it &amp;ndash; and the JVM &amp;ndash; to make it a fast and reliable platform. With this huge community comes a lot of junk to sift through, and swaths of under-performing engineers and companies, but there are a lot of gems to learn from this community.&lt;/p>
+&lt;h3 id="ruby" >Ruby
+&lt;span>
+&lt;a href="#ruby">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Speaking of gems, Ruby has taken rails and run with it, turning it into a successful platform that gets a lot of things right. Gems and bundler have made it easy for the community to grow and distribute shared code.&lt;/p>
+&lt;h3 id="python" >Python
+&lt;span>
+&lt;a href="#python">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Like Ruby, Python has become a mainstream general purpose language. SciPy, NumPy, and Django have led the way in the growth of the community. Pypy is becoming a leader in code execution and JIT, concepts that will hopefully become more universally usable in the months and years to come.&lt;/p>
+&lt;h3 id="javascript" >Javascript
+&lt;span>
+&lt;a href="#javascript">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>This introduction of JIT and other advanced optimization techniques in V8 has made Javascript become a prevalent language not only in the client-side, but also in the server-side. Node has helped develop a whole new class of full-stack engineers; engineers that only need 1 primary language to do &lt;em>everything&lt;/em>. While the merits of actually doing this are arguable, there is a lot of good work coming out of this camp, including pushes for event-based programming, especially concurrency concepts. A lot of these have been known about in acadamia for a while, but now there are some practical implementations of them.&lt;/p>
+&lt;h3 id="scala" >Scala
+&lt;span>
+&lt;a href="#scala">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Where Java fails, Scala hopes to succeed. Java has helped the development of the JVM, which other people are now trying to build upon to build a better Java. Scala adds a robust typesystem and a whole host of other language features to Java that are poised to allow developers to write better code. Scala is another example of taking concepts from acadamia and putting them in a package that regular developers can use.&lt;/p>
+&lt;h3 id="clojure" >Clojure
+&lt;span>
+&lt;a href="#clojure">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Lisp on the JVM. Lisp&amp;rsquo;s community is small, and sometimes it&amp;rsquo;s performance is suboptimal. By tapping into the JVM, Clojure hopes to get both the peformance and community behind it, turning Lisp into a mainstream powerhouse. Rich Hickey is a brilliant man, and even if Clojure doesn&amp;rsquo;t succeed, he should be listened to, as he has very pragmatic, very well thought out ideas about how development should be.&lt;/p>
+&lt;h3 id="go" >Go
+&lt;span>
+&lt;a href="#go">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Google&amp;rsquo;s systems programming language, Go allows development of systems that would traditionally be written in C (web servers, messaging systems, etc), without the hassle of memory management. Furthermore, it provides a lot of essential tools, namely channels, that allow massively concurrent systems to be built easily and with less bugs. Erlang had this market a long time ago, but now Go has both a more traditional code syntax, as opposed to Erlang&amp;rsquo;s prolog-inspired syntax, and the support of a major company, Google. Go is also more concerned with performance than Erlang ever was.&lt;/p>
+&lt;h3 id="closing-thoughts" >Closing thoughts
+&lt;span>
+&lt;a href="#closing-thoughts">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>This list is certainly biased, and are things that I care about. The goal of this list is to expose yourself to a variety of languages that will help you incorporate concepts into your daily work, whatever the language. This list is also very unix-centric; there is no C# for example. The goal of this list is to encourage you to learn some new concepts and hopefully make yourself a better programmer. Exposing yourself to new skills and new methods from other communities is the best way to make yourself better. Most importantly, know the right tool for the job, and understand what makes something the right tool for a given job.&lt;/p></description></item><item><title>What makes a good programming language</title><link>http://bryanalves.github.io/posts/2013-04-06-what-makes-a-good-programming-language/</link><pubDate>Sat, 06 Apr 2013 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2013-04-06-what-makes-a-good-programming-language/</guid><description>&lt;p>There are a lot of programming languages available, and a lot of reasons to pick one over the other.&lt;/p>
+&lt;h2 id="its-all-about-power-right" >It&amp;rsquo;s all about power, right?
+&lt;span>
+&lt;a href="#its-all-about-power-right">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>One thing that people discover as they work with languages is that some languages are more powerful than others. What does this mean exactly? Aren&amp;rsquo;t most languages Turing complete? At some level, it&amp;rsquo;s a matter of expressivity. Some languages are better at expressing concepts succinctly than others. Lisp is a good example of this. It&amp;rsquo;s extreme ability to metaprogram makes it the most expressive language available.&lt;/p>
+&lt;p>Why then isn&amp;rsquo;t it regularly used everywhere? If power and expressivity were all that mattered, then Lisp would dominate everything.&lt;/p>
+&lt;h2 id="library-and-3rd-party-support" >Library and 3rd party support
+&lt;span>
+&lt;a href="#library-and-3rd-party-support">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>Another critical component of a language is it&amp;rsquo;s library support. Sure, Lisp might allow someone to write a web server in only a few dozen lines of code, but this reinvention of the wheel misses the point. Ruby developers will just add some gems, Python developers will hit up PyPi, Perl developers will go to CPAN, etc. Lisp has a set of libraries available, but it&amp;rsquo;s not nearly as robust as what&amp;rsquo;s provided by other, more popular languages.&lt;/p>
+&lt;p>This is one of the reasons why Node has taken off; it embraced library support immediately, and npm has provided a rich environment for developers to work with.&lt;/p>
+&lt;h2 id="development-environment" >Development environment
+&lt;span>
+&lt;a href="#development-environment">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>Another important aspect is strength of development environment. This is an area where Lisp shines; it&amp;rsquo;s ability to be metaprogrammed makes things like Emacs work wonderfully with it. Here also is why Java and .NET are prevalent; Eclipse, NetBeans, and Visual Studio make up for other lackluster components of the languages.&lt;/p>
+&lt;h2 id="consistent-implementation" >Consistent implementation
+&lt;span>
+&lt;a href="#consistent-implementation">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>Lisp doesn&amp;rsquo;t really have a de facto implementation. Common Lisp is a standard, but implementation of the standard isn&amp;rsquo;t very widespread. This makes an already small community become somewhat fractured around implementatons. Python and Ruby don&amp;rsquo;t have this problem because they do have a de facto implementation, and that de facto implementation (CPython, and MRI) occupies a huge majority of the market. PyPy, JRuby, etc. are useful and great, but they don&amp;rsquo;t drive progress of the language. They also still identify at Python or Ruby programmers.&lt;/p>
+&lt;p>On the contrary, SBCL and Clojure don&amp;rsquo;t have this property.&lt;/p>
+&lt;h2 id="community" >Community
+&lt;span>
+&lt;a href="#community">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>This is a bit of a chicken and egg problem. Some languages are better than others because their communities are larger. Have a problem? You&amp;rsquo;ll be much more likely to get a response from a community of hundreds of thousands of developers than a community with orders of magnitude less than that.&lt;/p>
+&lt;h2 id="what-about-other-languages" >What about other languages?
+&lt;span>
+&lt;a href="#what-about-other-languages">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>So far I&amp;rsquo;ve primarily talked about Lisp, Ruby, and Python. Lisp is a powerful language, but it misses out on library support, and a consistent implementation. Ruby and Python are nearly as powerful, have tremendous libraries, reasonable development tools, and consistent implementations. What about other languages? Well, that&amp;rsquo;s an analysis for another time.&lt;/p>
+&lt;h2 id="what-does-this-mean" >What does this mean?
+&lt;span>
+&lt;a href="#what-does-this-mean">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>There&amp;rsquo;s more to a language than just it&amp;rsquo;s syntax, how easy it is to install, or what features it has. Everything mentioned here matters. As a perfect counter-example, consider Javascript. From a language strength point of view, it&amp;rsquo;s not very great. It&amp;rsquo;s syntax is bad enough that CoffeeScript was written as a preprocessor for the language. However, it&amp;rsquo;s still a wildly popular language, and that is because of a large community, among other things.&lt;/p>
+&lt;h2 id="how-do-i-make-my-language-popular" >How do I make my language popular?
+&lt;span>
+&lt;a href="#how-do-i-make-my-language-popular">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h2>&lt;p>As a language developer, you must:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Make it easy for reusable libraries to be built, distributed, and publicized. Gems, Pypi, CPAN, NPM, etc. should all be motivations. If your language doesn&amp;rsquo;t have something that compares, you likely won&amp;rsquo;t be successful.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Make development easy. Ensure that text editor support is good. Users of Vim or Emacs should want to use your language. If appropriate, work well with Eclipse or NetBeans. If you are huge like Microsoft, build your own world class IDE. Ensure that debugging support is good. If developers have to rely solely on print statements, you are in trouble.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Take control of your implementation. Do more than just release a spec for your language; release an implementation, and make sure it&amp;rsquo;s good.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Build the community, and market your language. Javascript might be bad, but node marketed itself, and now it&amp;rsquo;s huge. Make sure you are active in programming circles, attracting people. Have a presence on IRC. Have mailing lists. You want people more than using your language, you want them creating a community around it. Your goal should be to have a conference named after your language that people aspire to go to.&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>

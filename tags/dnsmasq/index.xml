@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>dnsmasq on Bryan's Blah Blog</title><link>http://bryanalves.github.io/tags/dnsmasq/</link><description>Bryan's Blah Blog (dnsmasq)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 02 Jul 2015 00:00:00 +0000</lastBuildDate><atom:link href="http://bryanalves.github.io/tags/dnsmasq/index.xml" rel="self" type="application/rss+xml"/><item><title>Enabling LXC on Archlinux with systemd-networkd</title><link>http://bryanalves.github.io/posts/2015-07-02-enabling-lxc-archlinux-with-systemd-networkd/</link><pubDate>Thu, 02 Jul 2015 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2015-07-02-enabling-lxc-archlinux-with-systemd-networkd/</guid><description>&lt;p>After playing around with docker a lot, I decided that it was time to spend some time with LXC as I tended to treat some of my docker containers like mini VMs anyway, especially when developing. I think a lot of the benefits of docker aren&amp;rsquo;t actually benefits, and I&amp;rsquo;ll be writing a follow-up post about that. To that end, I wanted to get LXC up and running.&lt;/p>
+&lt;h3 id="whats-so-hard" >What&amp;rsquo;s so hard?
+&lt;span>
+&lt;a href="#whats-so-hard">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>I&amp;rsquo;m on a laptop with wireless, so I can&amp;rsquo;t just create a bridge and give IPs to containers from an upstream DHCP server. I needed to do NAT and essentially simulate/replicate how docker networking works. My goals were:&lt;/p>
+&lt;ul>
+&lt;li>DHCP or some other auto-assignment of IPs&lt;/li>
+&lt;li>Containers can see each other by hostname&lt;/li>
+&lt;li>Containers can see the host, and other nodes on the network&lt;/li>
+&lt;li>Containers can see the internet&lt;/li>
+&lt;li>Have all of this networking transparently work and persist across reboots&lt;/li>
+&lt;/ul>
+&lt;h3 id="general-approach" >General approach
+&lt;span>
+&lt;a href="#general-approach">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;ul>
+&lt;li>Create a bridge interface&lt;/li>
+&lt;li>Set up IP forwarding and masquerading&lt;/li>
+&lt;li>Set up &lt;a href="http://www.thekelleys.org.uk/dnsmasq/doc.html">dnsmasq&lt;/a> as a DHCP server&lt;/li>
+&lt;li>profit?&lt;/li>
+&lt;/ul>
+&lt;p>In practice, these things didn&amp;rsquo;t work out so well.&lt;/p>
+&lt;h3 id="problem-1-netctl" >Problem 1: netctl
+&lt;span>
+&lt;a href="#problem-1-netctl">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>&lt;a href="https://wiki.archlinux.org/index.php/Netctl">Netctl&lt;/a> was the recommended choice for a while on Archlinux systems. Now that systemd is taking over, it seems like more and more support is coming over to &lt;a href="https://wiki.archlinux.org/index.php/Systemd-networkd">systemd-networkd&lt;/a>. I asked for help in chat and 3 people immediately were like &amp;ldquo;why are you still using netctl?&amp;ldquo;I ran into a bit of trouble creating a netctl profile to create a bridge on boot. While I could have made this work (and the end solution would have had me not touch netctl at all), I ended up yak shaving and switching to systemd-networkd. It was mostly painless with 1 hiccup:&lt;/p>
+&lt;h3 id="problem-2-systemd-networkd-ip-forwarding-defaults" >Problem 2: systemd-networkd ip forwarding defaults
+&lt;span>
+&lt;a href="#problem-2-systemd-networkd-ip-forwarding-defaults">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>By default, systemd-networkd does not honor &lt;em>sys.net.ipv4.ip_forward&lt;/em>. It instead creates a per-interface setting that defaults to no. This means that you need to explicitly set IPForward and IPMasquerade on your bridges. This includes the docker0 interface, which silently broke upon switching to systemd-networkd. It&amp;rsquo;s at least related to &lt;a href="https://bugs.freedesktop.org/show_bug.cgi?id=89509">this bug report&lt;/a>.&lt;/p>
+&lt;h3 id="back-to-sanity" >Back to sanity
+&lt;span>
+&lt;a href="#back-to-sanity">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>So we are now on systemd-networkd, which more easily allows us to define bridges and we have something roughly like this:&lt;/p>
+&lt;p>docker0.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=docker0
+[Network]
+IPForward=yes
+&lt;/code>&lt;/pre>
+&lt;p>wired.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=eth0
+[Network]
+DHCP=ipv4
+[DHCP]
+RouteMetric=10
+&lt;/code>&lt;/pre>
+&lt;p>wireless.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=wlan0
+[Network]
+DHCP=ipv4
+[DHCP]
+RouteMetric=20
+&lt;/code>&lt;/pre>
+&lt;h3 id="now-what" >Now what
+&lt;span>
+&lt;a href="#now-what">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>We haven&amp;rsquo;t even started making LXC work yet, let&amp;rsquo;s do that now. The first approach is to create a bridge interface for just LXC, so let&amp;rsquo;s do that&lt;/p>
+&lt;p>lxcbr0.netdev&lt;/p>
+&lt;pre>&lt;code>[NetDev]
+Name=lxcbr0
+Kind=bridge
+&lt;/code>&lt;/pre>
+&lt;p>lxcbr0.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=lxcbr0
+[Network]
+Address=10.0.100.1
+IPForward=yes
+IPMasquerade=yes
+&lt;/code>&lt;/pre>
+&lt;p>To use this, add something like the following to a config for your lxc container:&lt;/p>
+&lt;pre>&lt;code>lxc.network.type = veth
+lxc.network.flags = up
+lxc.network.link = lxcbr0
+&lt;/code>&lt;/pre>
+&lt;p>This will work, but requires you to specify an IP for the container statically. Let&amp;rsquo;s add dnsmasq:&lt;/p>
+&lt;pre>&lt;code>dhcp-range=10.0.100.100,10.0.100.200,12h
+interface=lxcbr0
+&lt;/code>&lt;/pre>
+&lt;p>After this, you&amp;rsquo;ll notice that it still doesn&amp;rsquo;t work. You need an iptables rule to handle some checksum mistakes&lt;/p>
+&lt;pre>&lt;code>iptables -t mangle -A POSTROUTING -o lxcbr0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
+&lt;/code>&lt;/pre>
+&lt;p>So far we&amp;rsquo;ve mostly got this handled by configuration files, but this checksum mangling is a manual step with no great place to automatically handle it. After a bit of looking around, Archlinux ships with a lxc-net systemd unit, which seems to do what I need. It&amp;rsquo;s a bit tricky to setup, and needs some interaction with systemd-networkd:&lt;/p>
+&lt;ul>
+&lt;li>The bridge can&amp;rsquo;t already exist, so we need to get rid of the lxcbr0.netdev file&lt;/li>
+&lt;li>The bridge still needs systemd-networkd style masquerading, so we keep the lxcbr0.network file (remove the address line)&lt;/li>
+&lt;/ul>
+&lt;p>You also need to tell lxc-net that you want to use the bridge, so in /etc/default/lxc, change USE_LXC_BRIDGE to true. As a bonus, lxc-net handles dnsmasq for you, so you can get rid of that unit.&lt;/p>
+&lt;h3 id="final-results" >Final results
+&lt;span>
+&lt;a href="#final-results">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>The units you should have enabled are:&lt;/p>
+&lt;ul>
+&lt;li>wpa_supplicant@wlan0&lt;/li>
+&lt;li>systemd-networkd&lt;/li>
+&lt;li>systemd-resolved&lt;/li>
+&lt;li>lxc-net&lt;/li>
+&lt;/ul>
+&lt;p>/etc/systemd/network/docker0.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=docker0
+[Network]
+IPForward=yes
+&lt;/code>&lt;/pre>
+&lt;p>/etc/systemd/network/lxcbr0.network&lt;/p>
+&lt;pre>&lt;code>[Match]
+Name=lxcbr0
+[Network]
+IPForward=yes
+IPMasquerade=yes
+&lt;/code>&lt;/pre>
+&lt;p>/etc/default/lxc&lt;/p>
+&lt;pre>&lt;code>LXC_AUTO=&amp;quot;true&amp;quot;
+BOOTGROUPS=&amp;quot;onboot,&amp;quot;
+SHUTDOWNDELAY=5
+OPTIONS=
+STOPOPTS=&amp;quot;-a -A -s&amp;quot;
+USE_LXC_BRIDGE=&amp;quot;true&amp;quot;
+[ ! -f /etc/default/lxc-net ] || . /etc/default/lxc-net
+&lt;/code>&lt;/pre>
+&lt;p>On the next reboot, you should have:&lt;/p>
+&lt;ul>
+&lt;li>A working docker0 interface (if you are keeping docker around)&lt;/li>
+&lt;li>An lxcbr0 interface with an IP associated with it&lt;/li>
+&lt;li>Starting LXC containers should grab a natted IP automatically via DHCP&lt;/li>
+&lt;/ul>
+&lt;p>As a bonus, LXC containers can address each other by hostname, and docker containers and lxc containers can see each other by IP. Some more dnsmasq magic could maybe clear some of that up even further.&lt;/p>
+&lt;p>The end resulting files make it seem like this is an easy problem, but the details of wireless not supporting actual bridging, netctl being flaky, systemd having unexpected ip_forwarding defaults, DHCP missing checksums, and lxc-net being a bit picky about how it gets started actually caused this exploration to take a few hours.&lt;/p></description></item></channel></rss>

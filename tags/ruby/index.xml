@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ruby on Bryan's Blah Blog</title><link>http://bryanalves.github.io/tags/ruby/</link><description>Bryan's Blah Blog (ruby)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 12 Jun 2013 00:00:00 +0000</lastBuildDate><atom:link href="http://bryanalves.github.io/tags/ruby/index.xml" rel="self" type="application/rss+xml"/><item><title>Upgrading to MiniTest</title><link>http://bryanalves.github.io/posts/2013-06-12-upgrading-to-minitest/</link><pubDate>Wed, 12 Jun 2013 00:00:00 +0000</pubDate><guid>http://bryanalves.github.io/posts/2013-06-12-upgrading-to-minitest/</guid><description>&lt;p>There are a lot of testing frameworks out there for Rails. A lot of work has been done in the community over the past few years, and it&amp;rsquo;s important to stay up to date with the latest in testing. Minitest is something that&amp;rsquo;s fairly old and stable at this point, but it provides a nice, clean, standardized testing interface with enough extensions to support other testing methodologies as well.&lt;/p>
+&lt;h3 id="what-about-rspec" >What about RSpec?
+&lt;span>
+&lt;a href="#what-about-rspec">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>RSpec is great, and it&amp;rsquo;s full featured and awesome. If you are using RSpec, feel free to continue. Lots of things have support for it, and there&amp;rsquo;s a great environment around RSpec.&lt;/p>
+&lt;h3 id="minitestunit-or-minitestspec" >MiniTest::Unit or MiniTest::Spec
+&lt;span>
+&lt;a href="#minitestunit-or-minitestspec">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Minitest&amp;rsquo;s biggest strength is it&amp;rsquo;s ability to straddle the xUnit/spec line, seamlessly transitioning between the two. In my opinion, spec-style tests are better and the way to go. They more cleanly and succinctly express intention of the test. However, they aren&amp;rsquo;t always appropriate, and falling back to standard xUnit assertions is very helpful.&lt;/p>
+&lt;p>Additionally, MiniTest::Spec gets surprisingly close to the ability of RSpec, especially with some of the extra expectation gems.&lt;/p>
+&lt;h3 id="extension-versus-replacement" >Extension versus replacement
+&lt;span>
+&lt;a href="#extension-versus-replacement">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>Things like shoulda attempted to make testing better by providing alternatives. With the exception of RSpec, these alternatives have simply diluted the choice of testing frameworks. MiniTest is different in that it&amp;rsquo;s modular and plugin-based, so everything stays coherent, even with significant additions. There&amp;rsquo;s a large list of extensions available on &lt;a href="https://github.com/seattlerb/minitest">Github&lt;/a>.&lt;/p>
+&lt;h3 id="the-way-forward" >The way forward
+&lt;span>
+&lt;a href="#the-way-forward">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h3>&lt;p>If you like spec-style tests, then gradually start going file-by-file through your test suite and do the conversion. Once you are done, you get the satisfaction of using a single testing tool, more readable tests, and probably faster test execution.&lt;/p></description></item></channel></rss>
