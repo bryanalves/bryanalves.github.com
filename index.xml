@@ -1,4 +1,60 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bryan's Blah Blog</title><link>https://bryanalves.github.io/</link><description>Bryan's Blah Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 14 Aug 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Chef Zero with Berkshelf</title><link>https://bryanalves.github.io/posts/chef-zero-with-berkshelf/</link><pubDate>Sun, 14 Aug 2016 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/chef-zero-with-berkshelf/</guid><description>&lt;p>If you have a single machine that you want to control with Chef (for example, a single home server, or a server that you want to bootstrap to run chef-server for other things), Chef Zero can be a good tool to use. Chef Zero can be used by using the &lt;code>chef-client -z&lt;/code> command. This will treat your local working directory like a Chef server, so you&amp;rsquo;ll want the following directory structure:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bryan's Blah Blog</title><link>https://bryanalves.github.io/</link><description>Bryan's Blah Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Beancount</title><link>https://bryanalves.github.io/posts/getting-started-with-beancount/</link><pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/getting-started-with-beancount/</guid><description>&lt;p>&lt;a href="https://github.com/beancount/beancount">Beancount&lt;/a> is &lt;a href="https://en.wikipedia.org/wiki/Double-entry_bookkeeping">double entry accounting&lt;/a> software that&amp;rsquo;s based on the &lt;a href="https://plaintextaccounting.org/">plain text accounting&lt;/a> principle. Being based on plain text allows a lot of programmatic flexibility, as well as portability.&lt;/p>
+&lt;p>I decided to track all of my personal finances using the tool, and want to provide a guide/cookbook to my methods. Documentation for the tool can be a bit scattered and incomplete, so I hope this cookbook-style guide helps to fill in some gaps.&lt;/p>
+&lt;h1 id="journey-to-ptabeancount" >Journey to PTA/Beancount
+&lt;span>
+&lt;a href="#journey-to-ptabeancount">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Before beancount, tools used varied from some custom spreadsheets, &lt;a href="www.mint.com">Mint&lt;/a>, and &lt;a href="www.gnucash.org">GnuCash&lt;/a>. All of these tools have their uses, and depending on the level of effort you want to expend on your finances can be suitable.&lt;/p>
+&lt;p>I moved away from Mint for a couple of reasons. The first is the generic privacy/trust concerns. Also, at the time, a large portion of the reporting was run by Flash, which was being phased out in browsers and so the site lost a lot of utility. It also doesn&amp;rsquo;t actually let you dig that deep into reporting, and errors in categorizations were a pain to deal with. Finally, syncing would randomly stop for extended periods of time, or weird duplicating things would happen. It is a good tool for getting an overall financial picture, but not a detailed one.&lt;/p>
+&lt;p>Custom spreadsheets can work fairly well for small scale tracking of things. One of the big downsides here is that it is manual entry; things are more error prone. If you want to track balances of accounts over time and get a good manual overall picture, a spreadsheet can be quite handy. I still have a spreadsheet for some tracking/estimating a few things that I haven&amp;rsquo;t programmed in Beancount yet.&lt;/p>
+&lt;p>The next big step is into true double-entry accounting. If you have never done double-entry accounting, it conceptually might scare you, and you might think it&amp;rsquo;s overkill for personal finances. That may be; your situation may vary. I found that after some upfront effort to understand things, and getting a system in place, things are actually much easier than with other tools.&lt;/p>
+&lt;p>GnuCash was my first foray into this. It has pretty good support for importing statements/documents, a reasonable user interface (which can make sharing the results/reporting of your finances easier). I found it to be significantly lacking in terms of tracking values of investments, including doing things such as rounding values that shouldn&amp;rsquo;t be rounded. Ultimately I didn&amp;rsquo;t have the control that I wanted, and the extensibility seemed lacking.&lt;/p>
+&lt;p>Which brings us to plain text accounting. It&amp;rsquo;s just text! If you can program, you can parse this data and do very interesting arbitrary things. There are 2 primary directions you can go here: ledger and it&amp;rsquo;s derivatives (like hledger), and beancount. I picked beancount because of it&amp;rsquo;s stated goal of doing a more thorough and strict job of tracking investment values, and it being written in python and having a better (in my opinion) extensibility story.&lt;/p>
+&lt;p>A lot of concepts are shared between ledger and beancount; there is even a script that can take an accounting file written in ledger and make it compatible with beancount. This guide will talk about some generic double entry concepts, but many of the concepts will be beancount specific.&lt;/p>
+&lt;p>The final reason that I preferred beancount is &lt;a href="https://github.com/beancount/fava">Fava&lt;/a>, the web user interface. At first glance it can be quite complicated and overwhelming, but once you understand the primary accounting concepts, it is a really powerful tool for digging around.&lt;/p>
+&lt;h1 id="installing-beancount" >Installing Beancount
+&lt;span>
+&lt;a href="#installing-beancount">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Beancount comes as a python package; your operating system might already have it packaged up, ready to install. I prefer to run it from a python virtual environment though, to ensure I have the latest versions of things. There&amp;rsquo;s a few tools that you&amp;rsquo;ll likely benefit from that you&amp;rsquo;ll also want to install, such as fava, some importers (more about these later), and maybe jinja or pandas if you end up writing custom reports. I like &lt;a href="https://github.com/jazzband/pip-tools">pip-tools&lt;/a> for this purpose. If you have a different preferred flow for working with python packages, go for it.&lt;/p>
+&lt;p>With pip-tools, the following requirements.in file will get you something pretty usable:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>beancount &amp;gt;=2.3.5, &amp;lt;3.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>beancount-cryptoassets @ https://github.com/xuhcc/beancount-cryptoassets/archive/master.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>beancount-import &amp;gt;=1.3.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>beancount-portfolio-allocation &amp;gt;=0.3.0, &amp;lt;1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>beancount-reds-importers &amp;gt;=0.5.1, &amp;lt;1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Jinja2 &amp;gt;=3.0.3, &amp;lt;4.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pandas &amp;gt;=1.3.5, &amp;lt;2.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pyright &amp;gt;=0.0.13, &amp;lt;1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>smart-importer &amp;gt;=0.3, &amp;lt;1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>click &amp;gt;=8.1.3, &amp;lt;9.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>fava &amp;gt;=1.22.2, &amp;lt;2.0.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Create a directory to store your financial data and code, save the above as &lt;code>requirements.in&lt;/code>, then:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>python -m venv .venv
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>source .venv/bin/activate
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pip install pip-tools
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pip-compile
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>pip-install -r requirements.txt
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>touch ledger.beancount
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>bean-check -v ledger.beancount
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>deactivate
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now, whenever you want to work with beancount, &lt;code>cd&lt;/code> into your financial directory, &lt;code>source .venv/bin/activate&lt;/code> and your shell prompt will change to indicate you are in a python virtual environment. When you are done, run &lt;code>deactivate&lt;/code>. If you want to check this into version control, you&amp;rsquo;ll want to check in both &lt;code>requirements.in&lt;/code> and &lt;code>requirements.txt&lt;/code>, and you&amp;rsquo;ll want to exclude &lt;code>.venv&lt;/code>&lt;/p>
+&lt;h1 id="resources" >Resources
+&lt;span>
+&lt;a href="#resources">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;ul>
+&lt;li>&lt;a href="https://plaintextaccounting.org/">https://plaintextaccounting.org/&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.reddit.com/r/plaintextaccounting/">https://www.reddit.com/r/plaintextaccounting/&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/beancount/beancount">https://github.com/beancount/beancount&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/beancount/fava">https://github.com/beancount/fava&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Using Chef Zero with Berkshelf</title><link>https://bryanalves.github.io/posts/chef-zero-with-berkshelf/</link><pubDate>Sun, 14 Aug 2016 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/chef-zero-with-berkshelf/</guid><description>&lt;p>If you have a single machine that you want to control with Chef (for example, a single home server, or a server that you want to bootstrap to run chef-server for other things), Chef Zero can be a good tool to use. Chef Zero can be used by using the &lt;code>chef-client -z&lt;/code> command. This will treat your local working directory like a Chef server, so you&amp;rsquo;ll want the following directory structure:&lt;/p>
 &lt;pre>&lt;code>cookbooks/
 data_bags/
 nodes/
