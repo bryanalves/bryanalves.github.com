@@ -1,4 +1,109 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Bryan's Blah Blog</title><link>https://bryanalves.github.io/posts/</link><description>Bryan's Blah Blog (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Getting started with Beancount</title><link>https://bryanalves.github.io/posts/getting-started-with-beancount/</link><pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/getting-started-with-beancount/</guid><description>&lt;p>&lt;a href="https://github.com/beancount/beancount">Beancount&lt;/a> is &lt;a href="https://en.wikipedia.org/wiki/Double-entry_bookkeeping">double entry accounting&lt;/a> software that&amp;rsquo;s based on the &lt;a href="https://plaintextaccounting.org/">plain text accounting&lt;/a> principle. Being based on plain text allows a lot of programmatic flexibility, as well as portability.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Bryan's Blah Blog</title><link>https://bryanalves.github.io/posts/</link><description>Bryan's Blah Blog (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 23 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>A Brief Overview of Account Types</title><link>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</link><pubDate>Tue, 23 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</guid><description>&lt;p>In double-entry accounting, there are 5 account types. Here we will summarize them from the scope of personal finance, and provide some sample use cases and cash flows so you can help identify when to create which type of account.&lt;/p>
+&lt;h1 id="what-is-an-account" >What is an account?
+&lt;span>
+&lt;a href="#what-is-an-account">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Most people will properly identify accounts as things like checking accounts at banks, or your credit card, or maybe a mortgage or loan. Things that typically have identifying features such as an account number, are associated with an institution, etc. While these &lt;em>ARE&lt;/em> accounts, the actual definition of an account is much more broad:&lt;/p>
+&lt;blockquote>
+&lt;p>An account is a named list of transactions&lt;/p>
+&lt;/blockquote>
+&lt;p>It doesn&amp;rsquo;t need to be owned by an institution. It doesn&amp;rsquo;t have to have an account number. It doesn&amp;rsquo;t even have to have a known representation outside of your accounting system! Getting over this hurdle of understanding will make understanding &amp;ldquo;accounts&amp;rdquo; in double-entry personal finance &lt;em>MUCH&lt;/em> easier. It comes with a bit of practice, and it eventually clicks.&lt;/p>
+&lt;p>A sample use case to define this is savings sub-accounts. Some people like to create things like the &amp;ldquo;save for a holiday fund&amp;rdquo;, or the &amp;ldquo;new car fund&amp;rdquo;, and many financial institutions support this functionality in their interface. For those that don&amp;rsquo;t, however, you can create these accounts manually on your side and track it yourself. There&amp;rsquo;s nothing stopping you from creating as many sub-accounts as you want manually and &amp;ldquo;transferring&amp;rdquo; money between them within your own ledger. Beancount will even helpfully report the balance of the main account, even if there aren&amp;rsquo;t any actual transactions there, by rolling up the sub-accounts so you can still see the whole picture.&lt;/p>
+&lt;p>In my opinion, as a general rule, it&amp;rsquo;s better to create more accounts than fewer.&lt;/p>
+&lt;h1 id="debits-and-credits-need-not-apply" >Debits and credits need not apply
+&lt;span>
+&lt;a href="#debits-and-credits-need-not-apply">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Traditional double entry accounting used the terms debit and credit to reflect changes to accounts, and different types of accounts either increased or decreased based on debits or credits. It&amp;rsquo;s easy to find the history of this, but it isn&amp;rsquo;t particularly relevant for most computer-generated double entry systems. Beancount (and others) use the simpler &amp;ldquo;increase&amp;rdquo; and &amp;ldquo;decrease&amp;rdquo; verbs, as well as allowing negative numbers.&lt;/p>
+&lt;h1 id="account-type-1-assets" >Account type 1: Assets
+&lt;span>
+&lt;a href="#account-type-1-assets">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Assets are what most people first think of when they think of accounts. Assets are anything you own or have control over that has value. The most obvious examples are your checking and savings accounts. Your house, if you own one, is also an asset, as well as other physical property that has cash value (cars, collectibles, art). Also your investment accounts, whether they are normal brokerage accounts or retirement accounts. If it has a positive value, and you regularly receive a statement for it, it&amp;rsquo;s almost certainly an asset account. Obviously your cash in your wallet, or cash that you keep on hand in the house or in your car for emergencies can also be asset accounts.&lt;/p>
+&lt;p>Asset accounts don&amp;rsquo;t need to have value denominated in your country&amp;rsquo;s native currency. You could track work vacation hours for example.&lt;/p>
+&lt;p>A final uncommon thing that you may see as an asset account is an IOU. In the business world this would be modeled as accounts receivable. If you have a friend who owes you some money, you may choose to record that as an account to keep track of how much they owe you. This is another great example of an account that doesn&amp;rsquo;t have a number, and doesn&amp;rsquo;t actually have a representation outside of your ledger.&lt;/p>
+&lt;ul>
+&lt;li>Asset accounts are almost always positive.&lt;/li>
+&lt;li>They can increase or decrease due to transfers from other asset accounts.&lt;/li>
+&lt;li>The can increase from income (salary, dividends, capital gains, etc).&lt;/li>
+&lt;li>They can decrease from funding an expense.&lt;/li>
+&lt;li>They can decrease from paying off liabilities.&lt;/li>
+&lt;/ul>
+&lt;h1 id="account-type-2-liabilities" >Account type 2: Liabilities
+&lt;span>
+&lt;a href="#account-type-2-liabilities">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Liabilities are often the second most common thing that people will think of when thinking of accounts. These are things your own or have control over that you owe money to. The most common examples are credit cards and loans. Your mortgage, if you have one, is also a liability.&lt;/p>
+&lt;p>The IOU asset account can also be a liability account if you owe a friend money. This is analogous to accounts payable from the business world.&lt;/p>
+&lt;ul>
+&lt;li>Liabiliity accounts are almost always negative (or zero).&lt;/li>
+&lt;li>They can decrease from funding an expense.&lt;/li>
+&lt;li>They can increase from a transfer from an asset account (representing a payment towards the liability)&lt;/li>
+&lt;li>They can increase from a transfer representing cash back rewards or similar. This is usually modeled as an income account.&lt;/li>
+&lt;li>They can increase or decrease due to transfers from other liability accounts (representing a balance transfer).&lt;/li>
+&lt;/ul>
+&lt;h1 id="account-type-3-expenses" >Account type 3: Expenses
+&lt;span>
+&lt;a href="#account-type-3-expenses">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Expense accounts are when double-entry accounting starts to really differentiate itself from other methods. Expense accounts are analogous to &amp;ldquo;spending categories&amp;rdquo; in Mint or other tools. In double entry accounting however they are &amp;ldquo;just another account.&amp;rdquo; This homogeneity has a lot of benefits. When getting started though, just thinking of them as spending categories will get you a long way down the path. You can create as many expense accounts as you want; they are all internal to your ledger system. The only thing to keep in mind is that this is an account, not a tag, meaning that you can&amp;rsquo;t attribute multiple expense accounts to a single transaction (unless you split the transaction).&lt;/p>
+&lt;p>Some examples of expense accounts include:&lt;/p>
+&lt;ul>
+&lt;li>Groceries&lt;/li>
+&lt;li>Restaurants&lt;/li>
+&lt;li>Auto repairs&lt;/li>
+&lt;li>Investment fees&lt;/li>
+&lt;li>Insurance&lt;/li>
+&lt;li>Taxes&lt;/li>
+&lt;/ul>
+&lt;p>Any set of expense accounts that makes sense to you and will let you track what you want to track will work. One of the benefits of plain text accounting is that doing things like renaming accounts, or being more (or less) fine-grained in the future is pretty easy to do. I also always keep a &amp;ldquo;Miscellaneous&amp;rdquo; expense account because categorizing everything perfectly isn&amp;rsquo;t possible, or if it is possible is way too much work.&lt;/p>
+&lt;ul>
+&lt;li>Expense accounts are almost always positive (this is counterintuitive!)&lt;/li>
+&lt;li>Expense accounts are increased by transfers from assets or liabilities to represent purchases.&lt;/li>
+&lt;li>Expense accounts are decreased product returns.&lt;/li>
+&lt;/ul>
+&lt;h1 id="account-type-4-income-sometimes-called-revenue" >Account type 4: Income (sometimes called Revenue)
+&lt;span>
+&lt;a href="#account-type-4-income-sometimes-called-revenue">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Income accounts are one of the most confusing account types when first coming across double entry accounting. People generally think of income as &amp;ldquo;making money,&amp;rdquo; yet income accounts are almost always monotonically &lt;em>decreasing&lt;/em>, not increasing!&lt;/p>
+&lt;p>The easiest way to reason about this is to think about income accounts as &amp;ldquo;somebody elses bank account.&amp;rdquo; When you receive income, somebody is transferring money from their account, to yours. Their account decreases, yours increases. This insight helped me really understand income accounts.&lt;/p>
+&lt;p>The most obvious example of an income account is for your paycheck. There are 2 ways to record this, by net or by gross.&lt;/p>
+&lt;p>By net is a simple transfer of net pay from the income account to the desired asset account. By gross involves transcribing all of the details of the paystub. The income account will decrease by the gross pay, and there will be legs of the transaction for taxes, insurance, retirement contributions, health insurance and other benefit deductions.&lt;/p>
+&lt;blockquote>
+&lt;p>A transaction involves 2 &lt;em>or more&lt;/em> accounts. Another huge difference between other systems!&lt;/p>
+&lt;/blockquote>
+&lt;p>By gross sounds complicated, but remember, most of your paychecks are very repetitive, and this is just plain text. Copy and paste!&lt;/p>
+&lt;p>Other examples of income accounts include bank interest, credit card cash back rewards, investment dividends, investment capital gains, and gifts. It&amp;rsquo;s also usually handy to have a miscellaneous income account here because sometimes things don&amp;rsquo;t fit into neat buckets.&lt;/p>
+&lt;h1 id="the-final-type-equity-sometimes-called-capital" >The final type: Equity (sometimes called Capital)
+&lt;span>
+&lt;a href="#the-final-type-equity-sometimes-called-capital">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Equity accounts are not very relevant for most personal finance setups. The most common use by far is the &amp;ldquo;opening balances&amp;rdquo; account, which is used to give accounts their starting balance. Because you typically start your double entry ledger sometime in the future after the account has been opened, the starting balance from where you start tracking each transaction needs to come from somewhere.&lt;/p>
+&lt;p>Another use for equity accounts is for things that you don&amp;rsquo;t otherwise want to track. When you have capital gains in retirement accounts for example, those capital gains need to be recorded somewhere so that transactions balance. You &lt;em>could&lt;/em> create an income account for this, but I find it better to &amp;ldquo;hide&amp;rdquo; this detail in an equity account. The same can be done for retirement accounts that have expenses and fees as separate line items instead of just rolled up into the fund&amp;rsquo;s expense ratio. These &lt;em>could&lt;/em> be recorded into an expense account, but again I prefer to &amp;ldquo;hide&amp;rdquo; it.&lt;/p>
+&lt;p>The last 2 things you might see equity accounts used for are conversions or rounding errors. Because of beancount&amp;rsquo;s robust currency and inventory system, you probably won&amp;rsquo;t find a need for a conversion account. A rounding errors account can be helpful if things just don&amp;rsquo;t line up (a statement records fractions of a cent by doesn&amp;rsquo;t tell you, for example). It can be a useful escape hatch. Be really careful relying on this though, as it&amp;rsquo;s more likely that you are doing something wrong if you have large rounding errors! At the time of writing, I have thousands of transactions across multiple years, and the sum of my rounding errors account is 1 cent.&lt;/p>
+&lt;h1 id="this-seems-hard-isnt-there-something-simpler" >This seems hard, isn&amp;rsquo;t there something simpler?
+&lt;span>
+&lt;a href="#this-seems-hard-isnt-there-something-simpler">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>There are simpler things, yes. They are not double-entry accounting. While it may be possible to simplify some of this, you&amp;rsquo;ll find that you end up needing or using all of these concepts pretty shortly after getting started. Give it a little time and practice and it will make sense.&lt;/p>
+&lt;p>The comments from &lt;a href="https://money.stackexchange.com/questions/47561/simplified-version-of-double-entry-bookkeeping-for-personal-and-business-finance">this stackexchange post&lt;/a> do a good job of explaining why simplifying this might not make sense. Trust the process a little bit!&lt;/p></description></item><item><title>Getting started with Beancount</title><link>https://bryanalves.github.io/posts/getting-started-with-beancount/</link><pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/getting-started-with-beancount/</guid><description>&lt;p>&lt;a href="https://github.com/beancount/beancount">Beancount&lt;/a> is &lt;a href="https://en.wikipedia.org/wiki/Double-entry_bookkeeping">double entry accounting&lt;/a> software that&amp;rsquo;s based on the &lt;a href="https://plaintextaccounting.org/">plain text accounting&lt;/a> principle. Being based on plain text allows a lot of programmatic flexibility, as well as portability.&lt;/p>
 &lt;p>I decided to track all of my personal finances using the tool, and want to provide a guide/cookbook to my methods. Documentation for the tool can be a bit scattered and incomplete, so I hope this cookbook-style guide helps to fill in some gaps.&lt;/p>
 &lt;h1 id="journey-to-ptabeancount" >Journey to PTA/Beancount
 &lt;span>
