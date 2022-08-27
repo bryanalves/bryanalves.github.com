@@ -1,4 +1,110 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bryan's Blah Blog</title><link>https://bryanalves.github.io/</link><description>Bryan's Blah Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 23 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>A Brief Overview of Account Types</title><link>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</link><pubDate>Tue, 23 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</guid><description>&lt;p>In double-entry accounting, there are 5 account types. Here we will summarize them from the scope of personal finance, and provide some sample use cases and cash flows so you can help identify when to create which type of account.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bryan's Blah Blog</title><link>https://bryanalves.github.io/</link><description>Bryan's Blah Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Your First Beancount Ledger</title><link>https://bryanalves.github.io/posts/your-first-beancount-ledger/</link><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/your-first-beancount-ledger/</guid><description>&lt;p>Getting started with beancount is easy &amp;ndash; it&amp;rsquo;s a plaintext file! Create a blank &lt;code>ledger.beancount&lt;/code> file if you haven&amp;rsquo;t already, and run &lt;code>bean-check&lt;/code> on it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>bean-check ledger.beancount
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>An empty file is valid. You can and should run &lt;code>bean-check&lt;/code> regularly to ensure that what you are doing stays accurate as you go, just like red-green refactoring.&lt;/p>
+&lt;h1 id="your-first-account" >Your first account
+&lt;span>
+&lt;a href="#your-first-account">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>You create accounts using the &lt;code>open&lt;/code> directive. Let&amp;rsquo;s assume you have a checking account. The syntax will look something like this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The format of the open directive is &lt;code>{date} open {account}&lt;/code>. Accounts are colon-separated. The first component must be one of the &lt;a href="https://bryanalves.github.io/posts/a-brief-overview-of-account-types/">5 account types&lt;/a> (&lt;code>Assets&lt;/code>, &lt;code>Liabilities&lt;/code>, &lt;code>Equity&lt;/code>, &lt;code>Expenses&lt;/code>, &lt;code>Income&lt;/code>). Everything after the first component can be structured however you want. Accounts will tend to have a hierarchical structure, and the result is called your chart of accounts. For assets and liabilities, I recommend grouping things by institution (like bank-name), and then account. If you are tracking accounts for multiple people (such as spouse), having a higher-level grouping by person can make things easier, such as:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Me:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Me:CapitalTwo:Savings
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Spouse:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Joint:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The structure is entirely up to you. The date of the open directive just needs to be a date before the first recorded transaction on the account.&lt;/p>
+&lt;p>You&amp;rsquo;ll also need an account to source opening balances, so create that now:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="your-first-transaction" >Your first transaction
+&lt;span>
+&lt;a href="#your-first-transaction">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Now we can fund the account:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Transactions take the form of &lt;code>{date} txn &amp;quot;{narration}&amp;quot; &amp;quot;{optional payee}&amp;quot;&lt;/code>, followed by a series of two or more postings. Postings can take a couple of forms, the most common of which is &lt;code>{account} {amount-change} {currency}&lt;/code>.&lt;/p>
+&lt;ul>
+&lt;li>Postings are indented.&lt;/li>
+&lt;li>&lt;em>Postings must sum to zero&lt;/em>. &lt;code>bean-check&lt;/code> will fail and yell if this invariant is violated.&lt;/li>
+&lt;li>Currency is a series of at least 2 capital letters. Preceding dollar signs are not used in beancount.&lt;/li>
+&lt;/ul>
+&lt;p>You&amp;rsquo;ll note that the &lt;code>Equity:Opening-Balances&lt;/code> posting has no amount to change. Beancount will automatically infer up to one posting for you in order to make your life easier. This is equivalent to the following:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances -4000 USD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There can be more than 2 postings:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Savings 10000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances -14000 USD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Remember that at most one posting can have it&amp;rsquo;s value inferred:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34; ; does not work
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Savings 10000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>(Note: The &lt;code>; does not work&lt;/code> above is valid syntax for a comment)&lt;/p>
+&lt;p>Ordering of postings does not matter:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances -14000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Savings 10000 USD
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="your-first-expense" >Your first expense
+&lt;span>
+&lt;a href="#your-first-expense">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Let&amp;rsquo;s record an expense:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Expenses:Groceries
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-02 txn &amp;#34;Buy Groceries&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Expenses:Groceries 40 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Remember, transactions must sum to zero, so you increase your expenses to decrease your account balance. This is equivalent to the following:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Expenses:Groceries
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-02 txn &amp;#34;Buy Groceries&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking -40 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Expenses:Groceries
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Record whichever way makes more sense to you, or manually specify the amounts in both postings. I tend to skip one of the postings for simple transactions like this. Importers, which we&amp;rsquo;ll talk about in a subsequent post, will simplify a lot of this as well.&lt;/p>
+&lt;p>Additionally, ordering of directives does not matter in beancount, with the exception of some intraday transactions. This will almost never come up or matter, but it does generally make your life easier.&lt;/p>
+&lt;h1 id="a-brief-view-into-reports" >A brief view into reports
+&lt;span>
+&lt;a href="#a-brief-view-into-reports">
+&lt;svg viewBox="0 0 28 23" height="100%" width="19" xmlns="http://www.w3.org/2000/svg">&lt;path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>&lt;/svg>
+&lt;/a>
+&lt;/span>
+&lt;/h1>&lt;p>Before we do some reporting, we need to tell beancount which currency is our operating currency. US dollars (or whatever you use) are not special in beancount. &lt;code>USD&lt;/code> is just a string of 3 characters. You configure beancount using &lt;code>option&lt;/code> directives. You can tell beancount that you want reports in USD by specifying:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>option &amp;#34;operating_currency&amp;#34; &amp;#34;USD&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will make more sense if and when you start tracking other assets, such as stocks, mutual funds, or if you travel and actually work with multiple currencies&lt;/p>
+&lt;p>With the final form:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>option &amp;#34;operating_currency&amp;#34; &amp;#34;USD&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Expenses:Groceries
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-01 txn &amp;#34;Opening Balance&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances -4000 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-02 txn &amp;#34;Buy Groceries&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Expenses:Groceries 40 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can run &lt;code>bean-check ledger.beancount&lt;/code> and receive no feedback, telling us out file is valid. We can get our net worth using&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>bean-report ledger.beancount networth
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will tell us the current value of all of our assets, minus any liabilities that we have.&lt;/p>
+&lt;p>You can see the current balance of all of your accounts by doing:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>bean-report ledger.beancount balances
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also start to visualize the data with fava:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>fava ledger.beancount
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And then visit &lt;a href="http://localhost:5000">http://localhost:5000&lt;/a> in your browser. Fava won&amp;rsquo;t make sense at first, but paradoxically the more data you add, the more useful it will become.&lt;/p></description></item><item><title>A Brief Overview of Account Types</title><link>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</link><pubDate>Tue, 23 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/a-brief-overview-of-account-types/</guid><description>&lt;p>In double-entry accounting, there are 5 account types. Here we will summarize them from the scope of personal finance, and provide some sample use cases and cash flows so you can help identify when to create which type of account.&lt;/p>
 &lt;h1 id="what-is-an-account" >What is an account?
 &lt;span>
 &lt;a href="#what-is-an-account">
