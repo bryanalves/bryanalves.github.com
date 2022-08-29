@@ -1,4 +1,74 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accounting on Bryan's Blah Blog</title><link>https://bryanalves.github.io/tags/accounting/</link><description>Bryan's Blah Blog (accounting)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 27 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/tags/accounting/index.xml" rel="self" type="application/rss+xml"/><item><title>Your First Beancount Ledger</title><link>https://bryanalves.github.io/posts/your-first-beancount-ledger/</link><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/your-first-beancount-ledger/</guid><description>&lt;p>Getting started with beancount is easy &amp;ndash; it&amp;rsquo;s a plaintext file! Create a blank &lt;code>ledger.beancount&lt;/code> file if you haven&amp;rsquo;t already, and run &lt;code>bean-check&lt;/code> on it:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>accounting on Bryan's Blah Blog</title><link>https://bryanalves.github.io/tags/accounting/</link><description>Bryan's Blah Blog (accounting)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/tags/accounting/index.xml" rel="self" type="application/rss+xml"/><item><title>Adding Commodities and Investments</title><link>https://bryanalves.github.io/posts/adding-commodities-and-investments/</link><pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/adding-commodities-and-investments/</guid><description>&lt;p>So far we&amp;rsquo;ve worked only with USD as a currency. Beancount also supports commodities held at cost. This means that holding onto something that was acquired on a specific date and with a cost basis. The most typical example of this is a unit of stock or a mutual fund. Here is an example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 commodity VTSAX
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Brokerage
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-27 txn &amp;#34;Acquire some VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage 10 VTSAX {100 USD}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-28 txn &amp;#34;Acquire some more VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage 10 VTSAX {100 USD}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Equity:Opening-Balances
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After this, &lt;code>Assets:Brokerage&lt;/code> has 20 total units of VTSAX, but it&amp;rsquo;s recorded as two separate holdings:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span># bean-report ledger.beancount holdings
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Account Units Currency Cost Currency Average Cost Price Book Value Market Value
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-------------------------- -------- -------- ------------- ------------ ----- ---------- ------------
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Assets:Brokerage 10.00 VTSAX USD 100.00 1,000.00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Assets:Brokerage 10.00 VTSAX USD 100.00 1,000.00
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is because when you sell them, you need to keep track of which you sell, so you can recognize the correct capital gains. Beancount uses 3 pieces of information for this:&lt;/p>
+&lt;ul>
+&lt;li>The acquisition cost (must be specified)&lt;/li>
+&lt;li>The acquisition date (defaults to the date of the transaction)&lt;/li>
+&lt;li>An optional label or id&lt;/li>
+&lt;/ul>
+&lt;p>When selling, you must specify enough information to uniquely identify the lots you are intending to sell. If all of your lots are acquired at different prices, you can specify just the price. If all of your lots are acquired on different dates, then you can just specify the date. I recommend explicitly specifying both the date and price when selling, as it will help to reduce errors (and makes the file easier to read):&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-29 txn &amp;#34;Sell VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage -10 VTSAX {100 USD, 2022-08-27}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Note that this assumes that you sell the unit for exactly what you paid for it. This is typically not the case! When you sell for a different price, you recognize either a capital gain or a loss. This is typically recorded using an &lt;code>Income&lt;/code> account:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Income:Gains:Short-Term:Brokerage
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 open Income:Gains:Long-Term:Brokerage
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-08-29 txn &amp;#34;Sell VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage -10 VTSAX {100 USD, 2022-08-27}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 110 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Income:Gains:Short-Term:Brokerage
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This will put 10 USD into an account to track your short-term capital gains. This is a US-centric interpretation of asset selling; consult your local laws to make sure you get the details right for recording. An additional step is to specify the selling cost, which is usually only used for documentation. A plugin (discussed later) can help you verify things by using this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-29 txn &amp;#34;Sell VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage -10 VTSAX {100 USD, 2022-08-27} @ 101 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 110 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Income:Gains:Short-Term:Brokerage
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or with @@ to track the full cost&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-29 txn &amp;#34;Sell VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage -10 VTSAX {100 USD, 2022-08-27} @@ 110 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 110 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Income:Gains:Short-Term:Brokerage
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>By default, all accounts are treated as &lt;code>STRICT&lt;/code>, meaning that bean-check will tell you if you get any of these details wrong. This is analogous to selling by lot id, or spec id by most brokers. There are other options:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>NONE&lt;/code> which lets you do whatever you want, including things like negative assets. You should ideally never need to use this.&lt;/li>
+&lt;li>&lt;code>FIFO&lt;/code>, which sells oldest things first&lt;/li>
+&lt;li>&lt;code>LIFO&lt;/code>, which sells newest things first&lt;/li>
+&lt;/ul>
+&lt;p>When using FIFO and LIFO, you don&amp;rsquo;t need to specify price and date when selling:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-08-29 txn &amp;#34;Sell VTSAX&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:Brokerage -10 VTSAX {} @ 101 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Assets:CapitalTwo:Checking 110 USD
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Income:Gains:Short-Term:Brokerage
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>With &lt;code>FIFO&lt;/code>, it will sell the 10 units acquired on 2022-08-27 in our example. With &lt;code>LIFO&lt;/code>, it will sell the 2022-08-28 units. LIFO/FIFO are especially useful for retirement accounts, where you don&amp;rsquo;t really want to track the gains, have no special tax treatment, and you ultimately just care about the total units held (with an approximately correct cost basis for reporting).&lt;/p>
+&lt;p>You specify the booking method when opening the account:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Brokerage &amp;#34;LIFO&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally, you will probably find it helpful to create sub-accounts for each commodity you plan on using. This will help to reduce errors, makes interop with some other tools better, and will make some reports easier to read:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>2022-01-01 open Assets:Brokerage:VTSAX
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-01-01 Income:Gains:Short-Term:Brokerage:VTSAX
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The income account is optional, but I tend to take the philosophy of more accounts is better than fewer.&lt;/p>
+&lt;p>Some summary guidelines:&lt;/p>
+&lt;ul>
+&lt;li>Create an account per commodity&lt;/li>
+&lt;li>When acquiring units, always specify the acquisition cost.&lt;/li>
+&lt;li>When selling units, always specify the acquisition cost and the acquisition date. Also, unless the unit is being directly transferred (rare!), always specify the selling cost, either per unit with &lt;code>@&lt;/code> or full cost with &lt;code>@@&lt;/code>&lt;/li>
+&lt;li>Create income accounts to track gains according to your tax laws (usually short-term and long-term). Optionally make these granular to each unit type, instead of institution.&lt;/li>
+&lt;li>Structure income accounts as `Income:{income-type}:{income-subtype-optional}:{institution}:{currency-or-unit}. It is MUCH more common to want a report such as &amp;ldquo;all short-term capital gains&amp;rdquo; than &amp;ldquo;all gains of any type for institution x&amp;rdquo;. Both are possible, but the recommended structure makes the first report essentially free.&lt;/li>
+&lt;/ul></description></item><item><title>Your First Beancount Ledger</title><link>https://bryanalves.github.io/posts/your-first-beancount-ledger/</link><pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/your-first-beancount-ledger/</guid><description>&lt;p>Getting started with beancount is easy &amp;ndash; it&amp;rsquo;s a plaintext file! Create a blank &lt;code>ledger.beancount&lt;/code> file if you haven&amp;rsquo;t already, and run &lt;code>bean-check&lt;/code> on it:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>bean-check ledger.beancount
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>An empty file is valid. You can and should run &lt;code>bean-check&lt;/code> regularly to ensure that what you are doing stays accurate as you go, just like red-green refactoring.&lt;/p>
 &lt;h1 id="your-first-account" >Your first account
