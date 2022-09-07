@@ -6,7 +6,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>; more plugins
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/accounts.beancount&amp;#34;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include data/closed_accounts.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/closed_accounts.beancount&amp;#34;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/commodities.beancount&amp;#34;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/prices.beancount&amp;#34;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2010.beancount&amp;#34;
