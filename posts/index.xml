@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Bryan's Blah Blog</title><link>https://bryanalves.github.io/posts/</link><description>Bryan's Blah Blog (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 01 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Beancount Plugins and Options</title><link>https://bryanalves.github.io/posts/beancount-plugins-and-options/</link><pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/beancount-plugins-and-options/</guid><description>&lt;p>Options allow you to change the behavior of your beancount ledger. We&amp;rsquo;ve already seen one to specify the main operating currency. The list of the rest is codified &lt;a href="https://github.com/beancount/beancount/blob/2.3.5/beancount/parser/options.py">here&lt;/a>. My recommendations are as follows:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Bryan's Blah Blog</title><link>https://bryanalves.github.io/posts/</link><description>Bryan's Blah Blog (Posts)</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 07 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://bryanalves.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Beancount Recommended Structure</title><link>https://bryanalves.github.io/posts/beancount-recommended-structure/</link><pubDate>Wed, 07 Sep 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/beancount-recommended-structure/</guid><description>&lt;p>By now, your beancount file might be getting a bit unwieldy and hard to understand. You have accounts, commodities, transactions, prices, plugins, settings, and more. Thankfully, beancount provides a way to help provide some structure, the &lt;code>include&lt;/code> directive. This lets you split your ledger up into multiple files. Here&amp;rsquo;s a recommended structure:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>option &amp;#34;title&amp;#34; &amp;#34;Main Ledger&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>; more options
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>plugin &amp;#34;beancount.plugins.check_average_cost&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>; more plugins
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/accounts.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include data/closed_accounts.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/commodities.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/prices.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2010.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2011.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2012.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2013.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2014.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2015.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2016.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2017.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2018.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2019.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2020.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2021.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/2022.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>include &amp;#34;data/incoming.beancount&amp;#34;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A couple of notes:&lt;/p>
+&lt;ul>
+&lt;li>I separated accounts from closed accounts. This allows me to have a clearer view into current accounts if necessary to make changes (for example, renaming).&lt;/li>
+&lt;li>I do transactions per year. This helps to make older transactions &amp;ldquo;feel immutable&amp;rdquo; and safer. Also less stuff to sort through if I&amp;rsquo;m looking for a specific transaction.&lt;/li>
+&lt;li>I create an &amp;ldquo;incoming&amp;rdquo; file that is usually blank (and checked in as blank into version control). I treat this as a staging area for adding lots of transactions at once (for example, monthly sync from importers). Get everything right, make &lt;code>bean-check&lt;/code> pass, and then cut/paste into the correct year.&lt;/li>
+&lt;li>All of these files are in a &lt;code>data&lt;/code> subdirectory. This structure makes code/data separation a bit easier and cleaner in my opinion.&lt;/li>
+&lt;/ul></description></item><item><title>Beancount Plugins and Options</title><link>https://bryanalves.github.io/posts/beancount-plugins-and-options/</link><pubDate>Thu, 01 Sep 2022 00:00:00 +0000</pubDate><guid>https://bryanalves.github.io/posts/beancount-plugins-and-options/</guid><description>&lt;p>Options allow you to change the behavior of your beancount ledger. We&amp;rsquo;ve already seen one to specify the main operating currency. The list of the rest is codified &lt;a href="https://github.com/beancount/beancount/blob/2.3.5/beancount/parser/options.py">here&lt;/a>. My recommendations are as follows:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-fallback" data-lang="fallback">&lt;span style="display:flex;">&lt;span>option &amp;#34;title&amp;#34; &amp;#34;Main Ledger&amp;#34;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>option &amp;#34;documents&amp;#34; &amp;#34;data/documents&amp;#34;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>option &amp;#34;operating_currency&amp;#34; &amp;#34;USD&amp;#34;
