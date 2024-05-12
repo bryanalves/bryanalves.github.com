@@ -1,58 +1,47 @@
 {
-	"name": "astro-cactus",
-	"version": "2.3.0",
-	"private": false,
+	"name": "eleventy-base-blog",
+	"version": "8.0.0",
+	"description": "A starter repository for a blog web site using the Eleventy site generator.",
 	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"sync": "astro sync",
-		"check": "astro check",
-		"build": "astro build",
-		"preview": "astro preview",
-		"format": "prettier -w --plugin-search-dir=. --cache ."
+		"start": "npm-run-all -p dev:*",
+		"dev:11ty": "npx @11ty/eleventy --serve --quiet",
+		"dev:css": "npx tailwindcss -i ./src/static/css/tailwind.css -o _site/css/tailwind.css --watch",
+		"build": "npm-run-all -s build:*",
+		"build:11ty": "npx @11ty/eleventy",
+		"build:css": "npx tailwindcss -i ./src/static/css/tailwind.css -o _site/css/tailwind.css"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/11ty/eleventy-base-blog.git"
+	},
+	"author": {
+		"name": "Bryan Alves",
+		"email": "bryanalves@gmail.com",
+		"url": "https://bryanalves.github.io"
+	},
+	"license": "MIT",
+	"engines": {
+		"node": ">=14"
+	},
+	"funding": {
+		"type": "opencollective",
+		"url": "https://opencollective.com/11ty"
+	},
+	"bugs": {
+		"url": "https://github.com/11ty/eleventy-base-blog/issues"
+	},
+	"homepage": "https://github.com/11ty/eleventy-base-blog#readme",
 	"devDependencies": {
-		"@astrojs/image": "0.16.9",
-		"@astrojs/mdx": "^0.19.6",
-		"@astrojs/sitemap": "^1.3.3",
-		"@astrojs/tailwind": "3.1.3",
-		"@resvg/resvg-js": "^2.4.1",
-		"@tailwindcss/aspect-ratio": "^0.4.2",
-		"@tailwindcss/typography": "^0.5.8",
-		"@types/eslint": "^8.40.0",
-		"@types/prettier": "^2.7.3",
-		"@typescript-eslint/eslint-plugin": "^5.59.8",
-		"@typescript-eslint/parser": "^5.59.8",
-		"astro-eslint-parser": "^0.14.0",
-		"autoprefixer": "^10.4.14",
-		"eslint": "^8.42.0",
-		"eslint-config-prettier": "^8.8.0",
-		"eslint-import-resolver-typescript": "^3.5.5",
-		"eslint-plugin-astro": "^0.27.1",
-		"eslint-plugin-import": "^2.26.0",
-		"eslint-plugin-jsx-a11y": "^6.7.1",
-		"eslint-plugin-prettier": "^4.2.1",
-		"postcss": "^8.4.24",
-		"postcss-html": "^1.5.0",
-		"prettier": "^2.8.8",
-		"prettier-plugin-astro": "0.10.0",
-		"prettier-plugin-tailwindcss": "^0.3.0",
-		"tailwindcss": "^3.3.2",
-		"typescript": "^5.1.3"
-	},
-	"dependencies": {
-		"@astrojs/prefetch": "^0.2.3",
-		"@astrojs/rss": "^2.4.3",
-		"astro": "2.5.7",
-		"satori": "0.10.1",
-		"satori-html": "^0.3.2",
-		"sharp": "^0.32.0"
-	},
-	"pnpm": {
-		"peerDependencyRules": {
-			"ignoreMissing": [
-				"rollup"
-			]
-		}
+		"@11ty/eleventy": "^2.0.1",
+		"@11ty/eleventy-img": "^3.1.1",
+		"@11ty/eleventy-navigation": "^0.3.5",
+		"@11ty/eleventy-plugin-bundle": "^1.0.4",
+		"@11ty/eleventy-plugin-rss": "^1.2.0",
+		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+		"@tailwindcss/typography": "^0.5.13",
+		"luxon": "^3.3.0",
+		"markdown-it-anchor": "^8.6.7",
+		"npm-run-all": "^4.1.5",
+		"tailwindcss": "^3.4.3"
 	}
 }

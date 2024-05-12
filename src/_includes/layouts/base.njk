@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="{{ metadata.language }}">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ title or metadata.title }}</title>
+	<meta name="description" content="{{ description or metadata.description }}">
+
+	<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="{{ metadata.title }}">
+	<link rel="alternate" href="/feed/feed.json" type="application/json" title="{{ metadata.title }}">
+
+	<meta name="generator" content="{{ eleventy.generator }}">
+
+	<link rel="stylesheet" href="/css/tailwind.css" %}">
+</head>
+
+ <body class="bg-gray-50 dark:bg-gray-900 font-serif">
+	<div class="md:max-w-prose mx-auto">
+    <div class="prose prose-sky prose-h1:text-4xl prose-h1:my-5 prose-h2:my-4 dark:prose-invert px-4 md:px-0">
+
+      <nav class="flex w-full py-8 justify-end">
+        {% set navPages = collections.all | eleventyNavigation %}
+
+        <div class='justify-between flex flex-row w-full'>
+          <span class="transition-all justify-self-start mt-5 px-0 hidden md:block">
+            <a class="font-bold no-underline hover:underline text-xl " href="{{ '/' | url }}">Bryan's Blah Blog</a>
+          </span>
+
+          <ul class="list-none mx-0 px-0">
+						{%- for entry in navPages %}
+						<span class="px-1 py-2 transition-all self-end">
+  						<a class="font-bold no-underline hover:underline" href="{{ entry.url }}">
+								{{ entry.title }}
+							</a>
+						</span>
+						{%- endfor %}
+          </ul>
+        </div>
+      </nav>
+
+      <main class="mb-auto">
+      {{ content | safe }}
+ 	    </main>
+
+ 	    <footer></footer>
+  	</div>
+	</div>
+	<!-- This page `{{ page.url | htmlBaseUrl }}` was built on {% currentBuildDate %} -->
+</body>
+</html>

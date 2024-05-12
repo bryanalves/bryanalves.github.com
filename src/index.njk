@@ -1,0 +1,29 @@
+---
+layout: layouts/home.njk
+eleventyNavigation:
+  key: Home
+  order: 1
+---
+
+<div>
+<p>
+My name is Bryan Alves, and I’m a software engineer in the Boston area. I mostly work on web applications using a variety of technologies.
+</p>
+
+<div>
+<ul>
+  <li><a href="https://linkedin.com/in/bryanalves">LinkedIn</a>
+  <li><a href="https://github.com/bryanalves">Github</a>
+  <li><a href="https://twitter.com/bryanalves">Twitter</a>
+  <li><a href="https://www.dropbox.com/s/dcrkchfg50esc29/resume.pdf?raw=1">Resume</a></li>
+  <li><a href="https://keyserver.ubuntu.com/pks/lookup?op=vindex&search=0xa9806fd1e6309118">GPG</a></li>
+</ul>
+</div>
+</div>
+
+<hr class="mt-4" />
+
+<h2>Posts</h2>
+
+{% set postslist = collections.posts %}
+{% include "postslist.njk" %}
