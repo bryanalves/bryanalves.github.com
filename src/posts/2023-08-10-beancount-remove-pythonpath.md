@@ -4,17 +4,15 @@ publishDate: 2023-08-10
 tags: [accounting]
 ---
 
-
-In a previous configuration, we added our extra python utilities by setting the beancount option `insert_pythonpath`.  In this iteration, we are going to more correctly package our files so they can be used externally if desired.
-
+In a previous configuration, we added our extra python utilities by setting the beancount option `insert_pythonpath`. In this iteration, we are going to more correctly package our files so they can be used externally if desired.
 
 # Installing pip-tools
 
-There are a variety of ways to work with python packaging, whether it be manually, poetry, or others.  I've found success with pip-tools, so it's what we are going to set up here.  If you followed along in the original setup, you already have a virtual environment set up with pip-tools, along with a `requirements.in` file, if not, refer [here](/posts/2022-08-22-getting-started-with-beancount/).
+There are a variety of ways to work with python packaging, whether it be manually, poetry, or others. I've found success with pip-tools, so it's what we are going to set up here. If you followed along in the original setup, you already have a virtual environment set up with pip-tools, along with a `requirements.in` file, if not, refer [here](/posts/2022-08-22-getting-started-with-beancount/).
 
 # Packaging the code
 
-If you've been following along, you have a top level `lib` directory with subdirectories for the various types of things.  You'll want to rename this lib directory to what you want the name of the package to be.  This can be whatever you want; I named mine `myledger`.  You'll want to update all references to `lib` in your beancount config to account for this while transitioning.  Next is to make a setup.py file to package the code.  This can be as simple as:
+If you've been following along, you have a top level `lib` directory with subdirectories for the various types of things. You'll want to rename this lib directory to what you want the name of the package to be. This can be whatever you want; I named mine `myledger`. You'll want to update all references to `lib` in your beancount config to account for this while transitioning. Next is to make a setup.py file to package the code. This can be as simple as:
 
 ```python
 from setuptools import setup
@@ -41,7 +39,7 @@ setup(
 )
 ```
 
-The notable things here are the `packages` and the `install_requires` directives.  Things that your package code needs directly, like Jinja, should be specified here directly and removed from the `requirements.in` file.
+The notable things here are the `packages` and the `install_requires` directives. Things that your package code needs directly, like Jinja, should be specified here directly and removed from the `requirements.in` file.
 
 Next, you'll want to set the package to install locally, to do that, add the following line to `requirements.in`:
 
@@ -49,14 +47,14 @@ Next, you'll want to set the package to install locally, to do that, add the fol
 -e file:.#egg=myledger
 ```
 
-This somewhat magical invocation says to treat the current directory as a locally installed package, and to give it the name of `myledger`.  After this, `pip-compile` will make a proper `requiremnts.txt` that can be installed.  After this, you can remove the `insert_pythonpath` directive from your configuration, and have lines such as:
+This somewhat magical invocation says to treat the current directory as a locally installed package, and to give it the name of `myledger`. After this, `pip-compile` will make a proper `requiremnts.txt` that can be installed. After this, you can remove the `insert_pythonpath` directive from your configuration, and have lines such as:
 
 ```beancount
 plugin "myledger.plugins.amortize_over"
 2010-01-01 custom "fava-extension" "myledger.fava_ext.short_term_gains"
 ```
 
-Work correctly without any extra work.  You can also remove any manual path manipulation in any scripts you have to run things, for example, I have a runner for reporting that now looks like this:
+Work correctly without any extra work. You can also remove any manual path manipulation in any scripts you have to run things, for example, I have a runner for reporting that now looks like this:
 
 ```python
 #!/usr/bin/env python3
@@ -67,4 +65,4 @@ if __name__ == '__main__':
   cli.cli()
 ```
 
-Before, this script would need to append the path of myledger before being able to access anything in it.  Now it's just normal python packaging.
+Before, this script would need to append the path of myledger before being able to access anything in it. Now it's just normal python packaging.
